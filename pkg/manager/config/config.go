@@ -56,6 +56,7 @@ type Config struct {
 	ProxyTimeoutSeconds                    float32
 
 	// Kubernetes configurations
+	DisableIngressAnnotation bool
 	KubeconfigPath           string
 	IngressClassName         string
 	LeaderElectionNamespace  string

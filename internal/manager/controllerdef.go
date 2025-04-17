@@ -261,6 +261,7 @@ func setupControllers(
 				DisableIngressClassLookups: !c.IngressClassNetV1Enabled,
 				CacheSyncTimeout:           c.CacheSyncTimeout,
 				ReferenceIndexers:          referenceIndexers,
+				DisableIngressAnnotation:   c.DisableIngressAnnotation,
 				// TODO https://github.com/Kong/kubernetes-ingress-controller/issues/4578
 				// StatusQueue:       kubernetesStatusQueue,
 			},

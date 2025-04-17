@@ -720,6 +720,7 @@ type KongV1KongClusterPluginReconciler struct {
 	IngressClassName           string
 	DisableIngressClassLookups bool
 	ReferenceIndexers          ctrlref.CacheIndexers
+	DisableIngressAnnotation   bool
 }
 
 var _ controllers.Reconciler = &KongV1KongClusterPluginReconciler{}
@@ -838,7 +839,7 @@ func (r *KongV1KongClusterPluginReconciler) Reconcile(ctx context.Context, req c
 		}
 	}
 	// if the object is not configured with our ingress.class, then we need to ensure it's removed from the cache
-	if !ctrlutils.MatchesIngressClass(obj, r.IngressClassName, ctrlutils.IsDefaultIngressClass(class)) {
+	if !r.DisableIngressAnnotation && !ctrlutils.MatchesIngressClass(obj, r.IngressClassName, ctrlutils.IsDefaultIngressClass(class)) {
 		log.V(logging.DebugLevel).Info("Object missing ingress class, ensuring it's removed from configuration",
 			"namespace", req.Namespace, "name", req.Name, "class", r.IngressClassName)
 		return ctrl.Result{}, r.DataplaneClient.DeleteObject(obj)
